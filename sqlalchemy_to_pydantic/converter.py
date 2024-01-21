@@ -7,11 +7,10 @@ orm_config = ConfigDict(from_attributes=True)
 def sqlalchemy_to_pydantic(
     db_model: Type, *, config: Type = orm_config, exclude: Container[str] = []
 ) -> Type[BaseModel]:
-    #table_name = (
-   #    f"{db_model.metadata.schema}.{db_model.__tablename__}" if db_model.metadata.schema else db_model.__tablename__
-   # )
-    #table = db_model.metadata.tables[table_name]
-    table = db_model.metadata.tables[db_model.__tablename__]
+    table_name = (
+       f"{db_model.metadata.schema}.{db_model.__tablename__}" if db_model.metadata.schema else db_model.__tablename__
+    )
+    table = db_model.metadata.tables[table_name]
     fields = {}
     for column in table.columns:
         name = column.name
